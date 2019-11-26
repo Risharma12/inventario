@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,22 +14,22 @@ public class Sql_Registro_Proveedores extends Conexion {
     
     
     //Método para realizar una insercion en la base de datos
-     public boolean guardarprovedores(Modelo_Proveedores guardar_proveedores )
+     public boolean guardarproveedores(Modelo_Proveedores guardar_proveedores )
   {
    
      PreparedStatement ps = null;
      Connection con = getConexion();
        //Sentencia SQL para realizar una introduccion de datos
-       String sql = "INSERT INTO proveedores (nombre_proveedores, domicilio_proveedores, telefono_proveedores, rfc_proveedores, ciudad_proveedores) VALUES(?, ?, ?, ?, ?)";
+       String sql = "INSERT INTO proveedores (nombre, direccion, telefono, rfc, ciudad) VALUES(?, ?, ?, ?, ?)";
       
        
        try {
            ps = con.prepareStatement(sql);           
-           ps.setString(1,guardar_proveedores.getNombre_proveedor());           
-           ps.setString(2,guardar_proveedores.getDireccion_proveedor());  
-           ps.setString(3,guardar_proveedores.getTelefono_proveedor());
-           ps.setString(4,guardar_proveedores.getRfc_proveedor());
-           ps.setString(5,guardar_proveedores.getCiudad_proveedor());
+           ps.setString(1,guardar_proveedores.getNombre());           
+           ps.setString(2,guardar_proveedores.getDireccion());  
+           ps.setString(3,guardar_proveedores.getTelefono());
+           ps.setString(4,guardar_proveedores.getRfc());
+           ps.setString(5,guardar_proveedores.getCiudad());
   
            ps.execute();
            return true;
@@ -46,15 +47,16 @@ public class Sql_Registro_Proveedores extends Conexion {
         PreparedStatement ps = null;
         Connection con = getConexion();
             //Sentencia SQL para actualizar los datos
-        String sql = "UPDATE proveedores SET nombre_proveedor=?, domicilio_provedor=?, telefono_proveedor=?, rfc_proveedor=?, ciudad_proveedor=?  WHERE id_proveedor=? ";
+        String sql = "UPDATE proveedores SET nombre=?, direccion=?, telefono=?, rfc=?, ciudad=?  WHERE idproveedores=? ";
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, modificarprov.getNombre_proveedor());
-            ps.setString(2,modificarprov.getDireccion_proveedor());  
-            ps.setString(3,modificarprov.getTelefono_proveedor());
-            ps.setString(4,modificarprov.getRfc_proveedor());
-            ps.setString(5,modificarprov.getCiudad_proveedor());
+            ps.setString(1, modificarprov.getNombre());
+            ps.setString(2,modificarprov.getDireccion());  
+            ps.setString(3,modificarprov.getTelefono());
+            ps.setString(4,modificarprov.getRfc());
+            ps.setString(5,modificarprov.getCiudad());
+            ps.setInt(6, modificarprov.getIdproveedores());
            
             ps.execute();
             return true;
@@ -69,32 +71,58 @@ public class Sql_Registro_Proveedores extends Conexion {
             }
         }
     }
-      
+    
+      public boolean eliminarproveedores(Modelo_Proveedores eliminarprov) {
+        PreparedStatement ps = null;       
+        Connection con = getConexion();
+        
+            //Sentencia para eliminar el producto
+        String sql = "DELETE FROM proveedores WHERE idproveedores=? ";
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, eliminarprov.getIdproveedores());
+            ps.execute();         
+                     
+            
+               return true;
+                      
+        } catch (SQLException e) {
+            System.err.println(e);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.err.println(e);
+            }
+        }
+    }
       
       public boolean buscarproveedores(Modelo_Proveedores buscarprov) {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = getConexion();
             //Sentencia para realizar una busqueda en la base de datos
-        String sql = "SELECT * FROM proveedores WHERE nombre_proveedores=? ";
+        String sql = "SELECT * FROM proveedores WHERE nombre=? ";
 
         try {
-            ps.setString(1, buscarprov.getNombre_proveedor());
-            ps.setString(2,buscarprov.getDireccion_proveedor());  
-            ps.setString(3,buscarprov.getTelefono_proveedor());
-            ps.setString(4,buscarprov.getRfc_proveedor());
-            ps.setString(5,buscarprov.getCiudad_proveedor());
+            ps = con.prepareStatement(sql);
+            ps.setString(1, buscarprov.getNombre());
+//            ps.setString(2,buscarprov.getDireccion());  
+//            ps.setString(3,buscarprov.getTelefono());
+//            ps.setString(4,buscarprov.getRfc());
+//            ps.setString(5,buscarprov.getCiudad());
             rs = ps.executeQuery();
             
             if(rs.next())
             {
-               buscarprov.setId_proveedor(Integer.parseInt(rs.getString("Id_proveedor")));
-               buscarprov.setNombre_proveedor(rs.getString("nombre_proveedor"));
-               buscarprov.setDireccion_proveedor(rs.getString("direccion_proveedor"));
-               buscarprov.setTelefono_proveedor(rs.getString("telefono_proveedor"));
-               buscarprov.setRfc_proveedor("rfc_proveedor");
-               buscarprov.setCiudad_proveedor("ciudad_proveedor");
-              
+               buscarprov.setIdproveedores(Integer.parseInt(rs.getString("idproveedores")));
+               buscarprov.setNombre(rs.getString("nombre"));
+               buscarprov.setDireccion(rs.getString("direccion"));
+               buscarprov.setTelefono(rs.getString("telefono"));
+               buscarprov.setRfc(rs.getString("rfc"));
+               buscarprov.setCiudad(rs.getString("ciudad"));
             
                return true;
             }

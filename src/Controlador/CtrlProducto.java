@@ -21,11 +21,12 @@ public class CtrlProducto implements ActionListener {
         this.frm.btnRegistrar.addActionListener(this);
         this.frm.btnModificar.addActionListener(this);
         this.frm.btnEliminar.addActionListener(this);
+        this.frm.btnBuscar.addActionListener(this);
         
     }
     
     public void iniciar(){
-//        frm.txtId.setVisible(false);
+        frm.txtId.setVisible(false);
         frm.setTitle("Productos");
         frm.setLocationRelativeTo(null);
         
@@ -34,11 +35,11 @@ public class CtrlProducto implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == frm.btnRegistrar){
-            mod.setCodigo(frm.txtCodigo.getText());
+            mod.setCodigo(Integer.parseInt(frm.txtCodigo.getText()));
             mod.setNombre(frm.txtNombre.getText());
             mod.setDescripcion(frm.txtDescripcion.getText());
             mod.setPrecio(Double.parseDouble(frm.txtPrecio.getText()));
-            mod.setTipo(frm.txtTipo.getText());
+            mod.setTipo(frm.cbxTipo.getSelectedItem().toString());
             
             if(modC.guardarproducto(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
@@ -51,11 +52,11 @@ public class CtrlProducto implements ActionListener {
         
         if(e.getSource() == frm.btnModificar){
             mod.setIdProductos(Integer.parseInt(frm.txtId.getText()));
-            mod.setCodigo(frm.txtCodigo.getText());
+            mod.setCodigo(Integer.parseInt(frm.txtCodigo.getText()));
             mod.setNombre(frm.txtNombre.getText());
             mod.setDescripcion(frm.txtDescripcion.getText());
             mod.setPrecio(Double.parseDouble(frm.txtPrecio.getText()));
-            mod.setTipo(frm.txtTipo.getText());
+            mod.setTipo(frm.cbxTipo.getSelectedItem().toString());
             
             if(modC.modificarproducto(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Modificado Exitosamente");
@@ -80,17 +81,17 @@ public class CtrlProducto implements ActionListener {
         }
         
         if(e.getSource() == frm.btnBuscar){
-            mod.setCodigo(frm.txtCodigo.getText());
+            mod.setCodigo(Integer.parseInt(frm.txtCodigo.getText()));
             
             
             
             if(modC.buscarproducto(mod)){
                 frm.txtId.setText(String.valueOf(mod.getIdProductos()));
-                frm.txtCodigo.setText(mod.getCodigo());
+                frm.txtCodigo.setText(String.valueOf(mod.getCodigo()));
                 frm.txtNombre.setText(mod.getNombre());
                 frm.txtDescripcion.setText(mod.getDescripcion());
                 frm.txtPrecio.setText(String.valueOf(mod.getPrecio()));
-                frm.txtTipo.setText(mod.getTipo());
+                frm.cbxTipo.setSelectedItem(mod.getTipo());
                 
             }else{
                 JOptionPane.showMessageDialog(null, "No se encontro ningun resultado.");
@@ -110,7 +111,7 @@ public class CtrlProducto implements ActionListener {
         frm.txtDescripcion.setText(null);
         
         frm.txtPrecio.setText(null);
-        frm.txtTipo.setText(null);
+        frm.cbxTipo.setSelectedIndex(0);
     }
     
 }

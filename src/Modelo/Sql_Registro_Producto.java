@@ -25,7 +25,7 @@ public class Sql_Registro_Producto extends Conexion {
        try {
            ps = con.prepareStatement(sql);      
            
-           ps.setString(1,guardar_producto.getCodigo());           
+           ps.setInt(1,guardar_producto.getCodigo());           
            ps.setString(2,guardar_producto.getNombre());           
            ps.setString(3,guardar_producto.getDescripcion());           
            ps.setDouble(4,guardar_producto.getPrecio());     
@@ -60,7 +60,7 @@ public class Sql_Registro_Producto extends Conexion {
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, modificar_producto.getCodigo());
+            ps.setInt(1, modificar_producto.getCodigo());
             ps.setString(2, modificar_producto.getNombre());
             ps.setString(3, modificar_producto.getDescripcion());
             ps.setDouble(4, modificar_producto.getPrecio());
@@ -116,17 +116,17 @@ public class Sql_Registro_Producto extends Conexion {
         ResultSet rs = null;
         Connection con = getConexion();
         
-            //Sentencia para eliminar el producto
+            //Sentencia para buscar
         String sql = "SELECT * FROM productos WHERE codigo=? ";
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, buscar_producto.getCodigo());
+            ps.setInt(1, buscar_producto.getCodigo());
             rs = ps.executeQuery();
            
             if(rs.next()){
                 buscar_producto.setIdProductos(Integer.parseInt(rs.getString("idProductos")));
-                buscar_producto.setCodigo(rs.getString("codigo"));
+                buscar_producto.setCodigo(Integer.parseInt(rs.getString("codigo")));
                 buscar_producto.setNombre(rs.getString("nombre"));
                 buscar_producto.setDescripcion(rs.getString("descripcion"));
                 buscar_producto.setPrecio(Double.parseDouble(rs.getString("precio")));

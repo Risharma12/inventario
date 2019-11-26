@@ -5,7 +5,7 @@ package Modelo;
 public class Modelo_Producto {
     //Nombre de los campos de la tabla Productos
     private int idProductos;
-    private String codigo;
+    private int codigo;
     private String nombre;
     private String descripcion;
     private Double precio;
@@ -19,11 +19,11 @@ public class Modelo_Producto {
         this.idProductos = idProductos;
     }
     
-    public String getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 
