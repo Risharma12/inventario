@@ -1,17 +1,52 @@
 
 package Vista;
 
+import Controlador.CtrlDevolucion;
+import Controlador.CtrlEntradas;
 import Controlador.CtrlProducto;
+import Controlador.CtrlProveedor;
+import Controlador.CtrlSalidas;
+import Controlador.CtrlUsuario;
+import Modelo.ModeloDevolucion;
+import Modelo.ModeloEntradas;
+import Modelo.ModeloSalidas;
+import Modelo.ModeloUsuario;
 import Modelo.Modelo_Producto;
+import Modelo.Modelo_Proveedores;
+import Modelo.SqlDevolucion;
+import Modelo.SqlEntradas;
+import Modelo.SqlSalidas;
+import Modelo.SqlUsuario;
 import Modelo.Sql_Registro_Producto;
+import Modelo.Sql_Registro_Proveedores;
 
 
 public class Principal extends javax.swing.JFrame {
+    
+    ModeloUsuario mod;
 
    
     public Principal() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    
+    public Principal(ModeloUsuario mod){
+        initComponents();
+        setLocationRelativeTo(null);
+        this.mod = mod;
+        
+        lblUsuario.setText(mod.getUsuario());
+        lblTipo.setText(mod.getNombre_tipo());
+        
+        if(mod.getId_tipo() == 1){
+            
+        } else if(mod.getId_tipo() == 2){
+            menuUsuarios.setVisible(false);
+            menuProveedores.setVisible(false);
+        }
+            
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -20,18 +55,18 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        lblTipo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuProveedores = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        menuUsuarios = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setForeground(new java.awt.Color(102, 0, 102));
@@ -45,16 +80,27 @@ public class Principal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jLabel1)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(157, 157, 157)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(lblUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -110,10 +156,10 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setBorder(new javax.swing.border.MatteBorder(null));
-        jMenu2.setText("Proveedores");
-        jMenu2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jMenu2.setMaximumSize(new java.awt.Dimension(173, 32767));
+        menuProveedores.setBorder(new javax.swing.border.MatteBorder(null));
+        menuProveedores.setText("Proveedores");
+        menuProveedores.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        menuProveedores.setMaximumSize(new java.awt.Dimension(173, 32767));
 
         jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem6.setText("Registrar Proveedor");
@@ -122,20 +168,16 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        menuProveedores.add(jMenuItem6);
 
-        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jMenuItem7.setText("Lista de Proveedores");
-        jMenu2.add(jMenuItem7);
+        jMenuBar1.add(menuProveedores);
 
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setBorder(new javax.swing.border.MatteBorder(null));
-        jMenu3.setText("Usuario");
-        jMenu3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jMenu3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jMenu3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jMenu3.setMaximumSize(new java.awt.Dimension(153, 32767));
+        menuUsuarios.setBorder(new javax.swing.border.MatteBorder(null));
+        menuUsuarios.setText("Usuario");
+        menuUsuarios.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        menuUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        menuUsuarios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        menuUsuarios.setMaximumSize(new java.awt.Dimension(153, 32767));
 
         jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem8.setText("Nuevo Usuario");
@@ -144,18 +186,9 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem8);
+        menuUsuarios.add(jMenuItem8);
 
-        jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jMenuItem9.setText("Editar Usuario");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem9);
-
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(menuUsuarios);
 
         setJMenuBar(jMenuBar1);
 
@@ -163,8 +196,16 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        reg_prod pro = new reg_prod ();
-        pro.show();
+       
+        Modelo_Producto mod = new Modelo_Producto();
+        Sql_Registro_Producto modC = new Sql_Registro_Producto();
+        reg_prod frm = new reg_prod();
+
+        
+        CtrlProducto ctrl = new CtrlProducto(mod, modC, frm);
+        ctrl.iniciar();
+        frm.setVisible(true);
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
@@ -173,34 +214,54 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1MouseClicked
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        entrada_prod ent = new entrada_prod();
-        ent.show();
+        ModeloEntradas mod3 = new ModeloEntradas();
+        SqlEntradas modC3 = new SqlEntradas();
+        entrada_prod frm3 = new entrada_prod();
+        
+        CtrlEntradas ctrl3 = new CtrlEntradas(mod3, modC3, frm3);
+        ctrl3.iniciar();
+        frm3.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        salida_prod sal = new salida_prod();
-        sal.show();
+        ModeloSalidas mod = new ModeloSalidas();
+        SqlSalidas modC = new SqlSalidas();
+        salida_prod frm = new salida_prod();
+        
+        CtrlSalidas ctrl = new CtrlSalidas(mod, modC, frm);
+        ctrl.iniciar();
+        frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        devolucion dev = new devolucion();
-        dev.show();
+        ModeloDevolucion mod = new ModeloDevolucion();
+        SqlDevolucion modC = new SqlDevolucion();
+        devolucion frm = new devolucion();
+        
+        CtrlDevolucion ctrl = new CtrlDevolucion(mod, modC, frm);
+        ctrl.iniciar();
+        frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        reg_prov reg = new reg_prov ();
-        reg.show();
+        Modelo_Proveedores mod2 = new Modelo_Proveedores();
+        Sql_Registro_Proveedores modC2 = new Sql_Registro_Proveedores();
+        reg_prov frm2 = new reg_prov();
+        
+        CtrlProveedor ctrl2 = new CtrlProveedor(mod2, modC2, frm2);
+        ctrl2.iniciar();
+        frm2.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        reg_usuario usu = new reg_usuario();
-        usu.show();
+        ModeloUsuario mod = new ModeloUsuario();
+        SqlUsuario modC = new SqlUsuario();
+        reg_usuario frm = new reg_usuario();
+        
+        CtrlUsuario ctrl = new CtrlUsuario(mod, modC, frm);
+        ctrl.iniciar();
+        frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        edit_usuario edi = new edit_usuario();
-        edi.show();
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,17 +298,17 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JMenu menuProveedores;
+    private javax.swing.JMenu menuUsuarios;
     // End of variables declaration//GEN-END:variables
 }

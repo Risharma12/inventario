@@ -3,14 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Controlador/CtrlEntradas.java</file>
-            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Controlador/CtrlProveedor.java</file>
-            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Main/Main.java</file>
-            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Modelo/SqlEntradas.java</file>
-            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Modelo/ModeloEntradas.java</file>
-            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Controlador/CtrlProducto.java</file>
-            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Modelo/Sql_Registro_Proveedores.java</file>
-            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Vista/entrada_prod.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Controlador/CtrlDevolucion.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Vista/Principal.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Modelo/hash.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Vista/Login.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Controlador/CtrlUsuario.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Vista/Inicio.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Vista/reg_usuario.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Vista/reg_prov.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Modelo/SqlUsuario.java</file>
+            <file>file:/C:/Users/Ricardo/Desktop/Inventario/src/Modelo/ModeloUsuario.java</file>
         </group>
     </open-files>
 </project-private>

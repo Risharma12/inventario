@@ -10,7 +10,17 @@ public class Modelo_Usuarios {
     private String domicilio_usuario;
     private String usuario_usuario;
     private String contrasena_usuario;
+    private int id_tipo;
+    private String nombre_tipo;
+    
 
+    public int getId_tipo() {
+        return id_tipo;
+    }
+
+    public void setId_tipo(int id_tipo) {
+        this.id_tipo = id_tipo;
+    }
     
     
     public int getId_usuario() {
@@ -53,8 +63,13 @@ public class Modelo_Usuarios {
         this.contrasena_usuario = contrasena_usuario;
     }
 
-   
-    
+    public String getNombre_tipo() {
+        return nombre_tipo;
+    }
+
+    public void setNombre_tipo(String nombre_tipo) {
+        this.nombre_tipo = nombre_tipo;
+    }      
     
     
 }
