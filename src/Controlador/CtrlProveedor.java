@@ -1,23 +1,24 @@
 package Controlador;
 
-import Modelo.Modelo_Proveedores;
-import Modelo.Sql_Registro_Proveedores;
+import Modelo.ModeloProveedores;
+import Modelo.ProveedoresDao;
 import Vista.reg_prov;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.util.HashSet;
 //import java.util.Set;
 import javax.swing.JOptionPane;
+import Modelo.Dao;
 
 public class CtrlProveedor implements ActionListener {
 
-    private Modelo_Proveedores mod;
-    private Sql_Registro_Proveedores modC;
+    private ModeloProveedores mod;
+    private Dao dao;
     private reg_prov frm;
 
-    public CtrlProveedor(Modelo_Proveedores mod, Sql_Registro_Proveedores modC, reg_prov frm) {
-        this.mod = mod;
-        this.modC = modC;
+    public CtrlProveedor(reg_prov frm) {
+        this.mod = new ModeloProveedores();
+        this.dao = new ProveedoresDao();
         this.frm = frm;
         this.frm.btnIngresar.addActionListener(this);
         this.frm.btnModificar.addActionListener(this);
@@ -40,7 +41,7 @@ public class CtrlProveedor implements ActionListener {
             mod.setRfc(frm.txtRfc.getText());
             mod.setCiudad(frm.txtCiudad.getText());
 
-            if (modC.guardarproveedores(mod)) {
+            if ((boolean)dao.guardar(mod)) {
                 JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
                 limpiar();
             } else {
@@ -57,7 +58,7 @@ public class CtrlProveedor implements ActionListener {
             mod.setRfc(frm.txtRfc.getText());
             mod.setCiudad(frm.txtCiudad.getText());
 
-            if (modC.modificarproveedores(mod)) {
+            if ((boolean)dao.modificar(mod)) {
                 JOptionPane.showMessageDialog(null, "Registro Modificado Exitosamente");
                 limpiar();
             } else {
@@ -69,7 +70,7 @@ public class CtrlProveedor implements ActionListener {
         if (e.getSource() == frm.btnEliminar) {
             mod.setIdproveedores(Integer.parseInt(frm.txtId.getText()));
 
-            if (modC.eliminarproveedores(mod)) {
+            if ((boolean)dao.eliminar(mod)) {
                 JOptionPane.showMessageDialog(null, "Registro Eliminado Exitosamente");
                 limpiar();
             } else {
@@ -81,7 +82,7 @@ public class CtrlProveedor implements ActionListener {
         if (e.getSource() == frm.btnBuscar) {
             mod.setNombre(frm.txtNombre.getText());
 
-            if (modC.buscarproveedores(mod)) {
+            if ((boolean)dao.buscar(mod)) {
                 frm.txtId.setText(String.valueOf(mod.getIdproveedores()));
 
                 frm.txtNombre.setText(mod.getNombre());

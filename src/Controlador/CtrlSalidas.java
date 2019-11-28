@@ -2,21 +2,22 @@
 package Controlador;
 
 import Modelo.ModeloSalidas;
-import Modelo.SqlSalidas;
+import Modelo.SalidasDao;
 import Vista.salida_prod;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import Modelo.Dao;
 
 
 public class CtrlSalidas implements ActionListener {
     private ModeloSalidas mod;
-    private SqlSalidas modC;
+    private Dao dao;
     private salida_prod frm;
 
-    public CtrlSalidas(ModeloSalidas mod, SqlSalidas modC, salida_prod frm) {
-        this.mod = mod;
-        this.modC = modC;
+    public CtrlSalidas(salida_prod frm) {
+        this.mod = new ModeloSalidas();
+        this.dao = new SalidasDao();
         this.frm = frm;
         this.frm.btnRegistrar.addActionListener(this);
         this.frm.btnModificar.addActionListener(this);
@@ -39,7 +40,7 @@ public class CtrlSalidas implements ActionListener {
            mod.setProducto(frm.cbxProducto.getSelectedItem().toString());
           
            
-           if(modC.guardarsalida(mod)){
+           if((boolean)dao.guardar(mod)){
                JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
                limpiar();
            } else {
@@ -55,7 +56,7 @@ public class CtrlSalidas implements ActionListener {
             mod.setProducto(frm.cbxProducto.getSelectedItem().toString());
             
             
-            if(modC.modificarsalida(mod)){
+            if((boolean)dao.modificar(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Modificado Exitosamente");
                 limpiar();
             }else{
@@ -68,7 +69,7 @@ public class CtrlSalidas implements ActionListener {
             mod.setIdsalidas(Integer.parseInt(frm.txtId.getText()));
             
             
-            if(modC.eliminarsalida(mod)){
+            if((boolean)dao.eliminar(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Eliminado Exitosamente");
                 limpiar();
             }else{
@@ -81,7 +82,7 @@ public class CtrlSalidas implements ActionListener {
             mod.setFecha(frm.txtFecha.getText());      
             
             
-            if(modC.buscarsalida(mod)){
+            if((boolean)dao.buscar(mod)){
                 frm.txtId.setText(String.valueOf(mod.getIdsalidas()));
                 frm.txtFecha.setText(mod.getFecha());                
                 frm.txtCantidad.setText(String.valueOf(mod.getCantidad()));

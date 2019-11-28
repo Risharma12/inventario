@@ -2,7 +2,7 @@
 package Modelo;
 
 
-public class Modelo_Proveedores {
+public class ModeloProveedores {
     
     //Variables de los campos de la tabla de proveedores
     private int idproveedores;

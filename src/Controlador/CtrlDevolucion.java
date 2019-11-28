@@ -2,21 +2,22 @@
 package Controlador;
 
 import Modelo.ModeloDevolucion;
-import Modelo.SqlDevolucion;
+import Modelo.DevolucionDao;
 import Vista.devolucion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import Modelo.Dao;
 
 
 public class CtrlDevolucion implements ActionListener{
     private ModeloDevolucion mod;
-    private SqlDevolucion modC;
+    private Dao dao;
     private devolucion frm;
 
-    public CtrlDevolucion(ModeloDevolucion mod, SqlDevolucion modC, devolucion frm) {
-        this.mod = mod;
-        this.modC = modC;
+    public CtrlDevolucion(devolucion frm) {
+        this.mod = new ModeloDevolucion();
+        this.dao = new DevolucionDao();
         this.frm = frm;
         this.frm.btnIngresar.addActionListener(this);
         this.frm.btnEliminar.addActionListener(this);
@@ -39,7 +40,7 @@ public class CtrlDevolucion implements ActionListener{
            mod.setProducto(frm.cbxProducto.getSelectedItem().toString());
            mod.setProveedor(frm.cbxProveedor.getSelectedItem().toString());
            
-           if(modC.guardardevolucion(mod)){
+           if((boolean)dao.guardar(mod)){
                JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
                limpiar();
            } else {
@@ -69,7 +70,7 @@ public class CtrlDevolucion implements ActionListener{
             mod.setIddevoluciones(Integer.parseInt(frm.txtId.getText()));
             
             
-            if(modC.eliminardevolucion(mod)){
+            if((boolean)dao.eliminar(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Eliminado Exitosamente");
                 limpiar();
             }else{
@@ -83,7 +84,7 @@ public class CtrlDevolucion implements ActionListener{
             
             
             
-            if(modC.buscardevolucion(mod)){
+            if((boolean)dao.buscar(mod)){
                 frm.txtId.setText(String.valueOf(mod.getIddevoluciones()));
                 frm.txtFecha.setText(mod.getFecha());
                 frm.txtComentarios.setText(mod.getComentarios());

@@ -12,13 +12,13 @@ import Modelo.ModeloEntradas;
 import Modelo.ModeloSalidas;
 import Modelo.ModeloUsuario;
 import Modelo.Modelo_Producto;
-import Modelo.Modelo_Proveedores;
-import Modelo.SqlDevolucion;
-import Modelo.SqlEntradas;
-import Modelo.SqlSalidas;
+import Modelo.ModeloProveedores;
+import Modelo.DevolucionDao;
+import Modelo.EntradasDao;
+import Modelo.SalidasDao;
 import Modelo.SqlUsuario;
-import Modelo.Sql_Registro_Producto;
-import Modelo.Sql_Registro_Proveedores;
+import Modelo.ProductoDao;
+import Modelo.ProveedoresDao;
 
 
 public class Principal extends javax.swing.JFrame {
@@ -197,12 +197,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        
-        Modelo_Producto mod = new Modelo_Producto();
-        Sql_Registro_Producto modC = new Sql_Registro_Producto();
+//        Modelo_Producto mod = new Modelo_Producto();
+//        ProductoDao modC = new ProductoDao();
         reg_prod frm = new reg_prod();
 
         
-        CtrlProducto ctrl = new CtrlProducto(mod, modC, frm);
+        CtrlProducto ctrl = new CtrlProducto(frm);
         ctrl.iniciar();
         frm.setVisible(true);
 
@@ -214,43 +214,40 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1MouseClicked
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        ModeloEntradas mod3 = new ModeloEntradas();
-        SqlEntradas modC3 = new SqlEntradas();
+        
         entrada_prod frm3 = new entrada_prod();
         
-        CtrlEntradas ctrl3 = new CtrlEntradas(mod3, modC3, frm3);
+        CtrlEntradas ctrl3 = new CtrlEntradas(frm3);
         ctrl3.iniciar();
         frm3.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        ModeloSalidas mod = new ModeloSalidas();
-        SqlSalidas modC = new SqlSalidas();
+        
         salida_prod frm = new salida_prod();
         
-        CtrlSalidas ctrl = new CtrlSalidas(mod, modC, frm);
+        CtrlSalidas ctrl = new CtrlSalidas(frm);
         ctrl.iniciar();
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        ModeloDevolucion mod = new ModeloDevolucion();
-        SqlDevolucion modC = new SqlDevolucion();
+        
         devolucion frm = new devolucion();
         
-        CtrlDevolucion ctrl = new CtrlDevolucion(mod, modC, frm);
+        CtrlDevolucion ctrl = new CtrlDevolucion(frm);
         ctrl.iniciar();
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        Modelo_Proveedores mod2 = new Modelo_Proveedores();
-        Sql_Registro_Proveedores modC2 = new Sql_Registro_Proveedores();
-        reg_prov frm2 = new reg_prov();
+//        ModeloProveedores mod2 = new ModeloProveedores();
+//        ProveedoresDao modC2 = new ProveedoresDao();
+        reg_prov frm = new reg_prov();
         
-        CtrlProveedor ctrl2 = new CtrlProveedor(mod2, modC2, frm2);
+        CtrlProveedor ctrl2 = new CtrlProveedor(frm);
         ctrl2.iniciar();
-        frm2.setVisible(true);
+        frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed

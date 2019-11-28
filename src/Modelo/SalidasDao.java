@@ -9,25 +9,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class SqlSalidas extends Conexion {
+public class SalidasDao extends Conexion implements Dao{
     
-    public boolean guardarsalida (ModeloSalidas guardar) {
+    private ModeloSalidas getSalida(Object o ){
+        ModeloSalidas salida;
+        try {
+           salida = (ModeloSalidas) o;
+        } catch (Exception e) {
+            Logger.getLogger(ProductoDao.class.getName()).log(Level.WARNING, null, e);
+            return null;
+        } 
+        return salida;
+    }
+
+    @Override
+    public Object guardar(Object o) {
+        
         PreparedStatement ps = null;
         Connection con = getConexion();
+        ModeloSalidas salida = getSalida(o);
         String sql = "INSERT INTO salidas (fecha, cantidad, producto) VALUES (?, ?, ?)";
         
         try {
             ps = con.prepareStatement(sql);
             
-            ps.setString(1, guardar.getFecha());           
-            ps.setDouble(2, guardar.getCantidad());
-            ps.setString(3, guardar.getProducto());            
+            ps.setString(1, salida.getFecha());           
+            ps.setDouble(2, salida.getCantidad());
+            ps.setString(3, salida.getProducto());            
             
             ps.execute();
             return true;
             
         } catch(SQLException ex){
-            Logger.getLogger(Sql_Registro_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoDao.class.getName()).log(Level.SEVERE, null, ex);
            return false;
         } finally {
             try {
@@ -37,25 +51,28 @@ public class SqlSalidas extends Conexion {
             }
         }
     }
-    
-    public boolean modificarsalida (ModeloSalidas modificar) {
+
+    @Override
+    public Object modificar(Object o) {
+        
         PreparedStatement ps = null;
         Connection con = getConexion();
+        ModeloSalidas salida = getSalida(o);
         String sql = "UPDATE salidas SET fecha=?, cantidad=?, producto=? WHERE idsalidas=? ";
         
         try {
             ps = con.prepareStatement(sql);
             
-            ps.setString(1, modificar.getFecha());          
-            ps.setDouble(2, modificar.getCantidad());
-            ps.setString(3, modificar.getProducto());            
-            ps.setInt(4, modificar.getIdsalidas());
+            ps.setString(1, salida.getFecha());          
+            ps.setDouble(2, salida.getCantidad());
+            ps.setString(3, salida.getProducto());            
+            ps.setInt(4, salida.getIdsalidas());
             
             ps.execute();
             return true;
             
         } catch(SQLException ex){
-            Logger.getLogger(Sql_Registro_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoDao.class.getName()).log(Level.SEVERE, null, ex);
            return false;
         } finally {
             try {
@@ -65,17 +82,19 @@ public class SqlSalidas extends Conexion {
             }
         }
     }
-    
-    public boolean eliminarsalida(ModeloSalidas eliminar) {
+
+    @Override
+    public Object eliminar(Object o) {
+        
         PreparedStatement ps = null;       
         Connection con = getConexion();
-        
+        ModeloSalidas salida = getSalida(o);
             //Sentencia para eliminar el producto
         String sql = "DELETE FROM salidas WHERE idsalidas=? ";
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, eliminar.getIdsalidas());
+            ps.setInt(1, salida.getIdsalidas());
             ps.execute();         
                      
             
@@ -92,6 +111,46 @@ public class SqlSalidas extends Conexion {
             }
         }
     }
+
+    @Override
+    public Object buscar(Object o) {
+        
+        PreparedStatement ps = null;     
+        ResultSet rs = null;
+        Connection con = getConexion();
+        ModeloSalidas salida = getSalida(o);
+            //Sentencia para buscar
+        String sql = "SELECT * FROM salidas WHERE fecha=? ";
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, salida.getFecha());
+            rs = ps.executeQuery();
+           
+            if(rs.next()){
+                salida.setIdsalidas(Integer.parseInt(rs.getString("idsalidas")));
+                salida.setFecha(rs.getString("fecha"));               
+                salida.setCantidad(Double.parseDouble(rs.getString("cantidad")));
+                salida.setProducto(rs.getString("producto"));
+                
+                return true;
+            }                   
+            
+               return false;
+                      
+        } catch (SQLException e) {
+            System.err.println(e);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    /*
     
     public boolean buscarsalida(ModeloSalidas buscar) {
         PreparedStatement ps = null;     
@@ -127,5 +186,5 @@ public class SqlSalidas extends Conexion {
                 System.err.println(e);
             }
         }
-    }
+    }*/
 }

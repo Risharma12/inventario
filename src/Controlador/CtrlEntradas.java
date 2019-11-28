@@ -2,22 +2,23 @@
 package Controlador;
 
 import Modelo.ModeloEntradas;
-import Modelo.SqlEntradas;
+import Modelo.EntradasDao;
 import Vista.entrada_prod;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import Modelo.Dao;
 
 
 public class CtrlEntradas implements ActionListener {
     
     private ModeloEntradas mod;
-    private SqlEntradas modC;
+    private Dao dao;
     private entrada_prod frm;
 
-    public CtrlEntradas(ModeloEntradas mod, SqlEntradas modC, entrada_prod frm) {
-        this.mod = mod;
-        this.modC = modC;
+    public CtrlEntradas(entrada_prod frm) {
+        this.mod = new ModeloEntradas();
+        this.dao = new EntradasDao();
         this.frm = frm;
         this.frm.btnIngresar.addActionListener(this);
         this.frm.btnModificar.addActionListener(this);
@@ -42,7 +43,7 @@ public class CtrlEntradas implements ActionListener {
            mod.setProducto(frm.cbxProducto.getSelectedItem().toString());
            mod.setProveedor(frm.cbxProveedor.getSelectedItem().toString());
            
-           if(modC.guardarentrada(mod)){
+           if((boolean)dao.guardar(mod)){
                JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
                limpiar();
            } else {
@@ -59,7 +60,7 @@ public class CtrlEntradas implements ActionListener {
             mod.setProducto(frm.cbxProducto.getSelectedItem().toString());
             mod.setProveedor(frm.cbxProveedor.getSelectedItem().toString());
             
-            if(modC.modificarentrada(mod)){
+            if((boolean)dao.modificar(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Modificado Exitosamente");
                 limpiar();
             }else{
@@ -72,7 +73,7 @@ public class CtrlEntradas implements ActionListener {
             mod.setIdentradas(Integer.parseInt(frm.txtId.getText()));
             
             
-            if(modC.eliminarentrada(mod)){
+            if((boolean)dao.eliminar(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Eliminado Exitosamente");
                 limpiar();
             }else{
@@ -86,7 +87,7 @@ public class CtrlEntradas implements ActionListener {
             
             
             
-            if(modC.buscarentrada(mod)){
+            if((boolean)dao.buscar(mod)){
                 frm.txtId.setText(String.valueOf(mod.getIdentradas()));
                 frm.txtFecha.setText(mod.getFecha());
                 frm.txtComentarios.setText(mod.getComentarios());

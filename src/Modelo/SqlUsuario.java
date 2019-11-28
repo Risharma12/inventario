@@ -26,7 +26,7 @@ public class SqlUsuario extends Conexion {
             return true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Sql_Registro_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
             try {
@@ -54,7 +54,7 @@ public class SqlUsuario extends Conexion {
             return true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Sql_Registro_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
             try {
@@ -146,7 +146,7 @@ public class SqlUsuario extends Conexion {
             return 1;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Sql_Registro_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoDao.class.getName()).log(Level.SEVERE, null, ex);
             return 1;
         } finally {
             try {
@@ -184,7 +184,7 @@ public class SqlUsuario extends Conexion {
             return false;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Sql_Registro_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
             try {

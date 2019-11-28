@@ -1,8 +1,9 @@
 
 package Controlador;
 
+import Modelo.Dao;
 import Modelo.Modelo_Producto;
-import Modelo.Sql_Registro_Producto;
+import Modelo.ProductoDao;
 import Vista.reg_prod;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,12 +12,13 @@ import javax.swing.JOptionPane;
 
 public class CtrlProducto implements ActionListener {
     private Modelo_Producto mod;
-    private Sql_Registro_Producto modC;
+    private Dao dao;
     private reg_prod frm;
     
-    public CtrlProducto(Modelo_Producto mod, Sql_Registro_Producto modC, reg_prod frm){
-        this.mod = mod;
-        this. modC = modC;
+    
+    public CtrlProducto(reg_prod frm){
+        this.mod = new Modelo_Producto();
+        this.dao = new ProductoDao();
         this.frm = frm;
         this.frm.btnRegistrar.addActionListener(this);
         this.frm.btnModificar.addActionListener(this);
@@ -34,14 +36,15 @@ public class CtrlProducto implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e){
-        if(e.getSource() == frm.btnRegistrar){
+        if(e.getSource() == frm.btnRegistrar){            
+          
             mod.setCodigo(Integer.parseInt(frm.txtCodigo.getText()));
             mod.setNombre(frm.txtNombre.getText());
             mod.setDescripcion(frm.txtDescripcion.getText());
             mod.setPrecio(Double.parseDouble(frm.txtPrecio.getText()));
             mod.setTipo(frm.cbxTipo.getSelectedItem().toString());
             
-            if(modC.guardarproducto(mod)){
+            if((boolean)dao.guardar(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
                 limpiar();
             }else{
@@ -58,7 +61,7 @@ public class CtrlProducto implements ActionListener {
             mod.setPrecio(Double.parseDouble(frm.txtPrecio.getText()));
             mod.setTipo(frm.cbxTipo.getSelectedItem().toString());
             
-            if(modC.modificarproducto(mod)){
+            if((boolean)dao.modificar(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Modificado Exitosamente");
                 limpiar();
             }else{
@@ -71,7 +74,7 @@ public class CtrlProducto implements ActionListener {
             mod.setIdProductos(Integer.parseInt(frm.txtId.getText()));
             
             
-            if(modC.eliminarproducto(mod)){
+            if((boolean)dao.eliminar(mod)){
                 JOptionPane.showMessageDialog(null, "Registro Eliminado Exitosamente");
                 limpiar();
             }else{
@@ -85,7 +88,7 @@ public class CtrlProducto implements ActionListener {
             
             
             
-            if(modC.buscarproducto(mod)){
+            if((boolean)dao.buscar(mod)){
                 frm.txtId.setText(String.valueOf(mod.getIdProductos()));
                 frm.txtCodigo.setText(String.valueOf(mod.getCodigo()));
                 frm.txtNombre.setText(mod.getNombre());
